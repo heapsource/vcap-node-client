@@ -1,6 +1,6 @@
 {
 	"name": "vcap",
-	"description": "VCAP(Cloudfoundry Client Library for Node.js)",
+	"description": "VCAP(Cloudfoundry) Client Library for Node.js",
 	"version": "0.1.0",
 	"author": "Firebase.co <npm@firebase.co> (http://www.firebase.co)",
 	"homepage": "http://www.firebase.co",

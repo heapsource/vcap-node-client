@@ -2,6 +2,14 @@
 
 VCAP(Cloudfoundry) Client Library for Node.js
 
+## Install
+
+    npm install vcap
+
+## Fire.js Ignitable
+
+For Fire.js Ignitables check [firebaseco/vcap-expressions](https://github.com/firebaseco/vcap-expressions)
+
 ### Contributors
 
 * Johan (author). Email: *johan@firebase.co*

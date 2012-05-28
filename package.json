@@ -16,9 +16,16 @@
 		"url" : "https://github.com/firejs/fire-web/issues" 
 	},
 	"keywords": ["cloud", "vcap", "vmc", "cloudfoundry", "vmware"],
+  "scripts": {
+    "test": "node_modules/.bin/vows test/test.js"
+  },
 	"dependencies":{ 
 		"request": ">= 2.2.5"
 	},
+  "devDependencies": {
+    "vows": "0.6.x",
+    "nock": "0.13.x"
+  },
 	"engines":{
 		"node": ">=  0.4.5"
 	},

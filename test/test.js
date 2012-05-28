@@ -64,3 +64,75 @@ vows.describe('auth').addBatch({
     }
   }
 }).export(module);
+
+vows.describe('apps').addBatch({
+  'When I invoke listApplications': {
+    'And I still have not created any apps': {
+      topic: function() {
+        nock('http://endpoint.example.com').matchHeader('authorization', 'SuperAuthToken').get('/apps').reply(200, []);
+        var callback = this.callback;
+        var client = new vcap.Client('http://endpoint.example.com', 'SuperAuthToken');
+        client.listApplications(function(err, list) {
+          callback(null, {
+            err: err || null,
+            list: list
+          });
+        });
+      },
+      'Then there should not be errors': function(topic) {
+        assert.isNull(topic.err);
+      },
+      'And the list should be an empty array': function(topic) {
+        assert.isEmpty(topic.list);
+      }
+    },
+    'And I have apps under my user': {
+      topic: function() {
+        nock('http://endpoint.example.com').matchHeader('authorization', 'SuperAppsToken').get('/apps').reply(200, [
+          {
+            name: "App1",
+            state: "RUNNING",
+            instances: 1,
+            services: ['my service 1']
+          },
+          {
+            name: "App2",
+            state: "STOPPED",
+            instances: 2,
+            services: []
+          }
+        ]);
+        var callback = this.callback;
+        var client = new vcap.Client('http://endpoint.example.com', 'SuperAppsToken');
+        client.listApplications(function(err, list) {
+          callback(null, {
+            err: err || null,
+            list: list
+          });
+        });
+      },
+      'Then there should not be errors': function(topic) {
+        assert.isNull(topic.err);
+      },
+      'And the length of the list should match the number of apps in my profile': function(topic) {
+        assert.lengthOf(topic.list, 2);
+      },
+      'And the attributes of the applications should match': function(topic) {
+        assert.deepEqual(topic.list, [
+          {
+            name: "App1",
+            state: "RUNNING",
+            instances: 1,
+            services: ['my service 1']
+          },
+          {
+            name: "App2",
+            state: "STOPPED",
+            instances: 2,
+            services: []
+          }
+        ]);
+      }
+    }
+  }
+}).export(module);
